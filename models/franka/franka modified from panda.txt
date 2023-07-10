@@ -1,0 +1,1 @@
+https://github.com/StanfordASL/PandaRobot.jl/tree/master/deps/Panda

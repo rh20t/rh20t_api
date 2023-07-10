@@ -1,0 +1,13 @@
+alive_progress
+ipython
+kinpy
+librosa
+matplotlib
+numpy
+open3d
+opencv_python
+pynput
+PyYAML
+tqdm
+transforms3d
+urdf_parser_py

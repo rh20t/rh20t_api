@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<fvr>
+    <!-- ============ Robot Setting ============================================
+    robot_type : Flexiv, UR5, Bullet, Klampt
+    simulate_joint_friction : Enable: 1 Disable:0
+    =========================================================================-->
+    <robot>
+        <robot_name> flexivBot </robot_name>
+        <robot_config_file>flexivBot.xml</robot_config_file>
+        <robot_controller_file>controllers/ctrlBullet.xml</robot_controller_file>
+        <robot_type>Bullet</robot_type>
+        <gravity> 0.0  0.0 -9.81 </gravity>
+        <base_angles>0.0 0.0</base_angles>
+        <simulate_joint_friction> 0 </simulate_joint_friction>
+        <dynamics>rbdl</dynamics>
+    </robot>
+    <!-- ============ Robot Flange Transformation ==============================
+    position_in_link : the position in parent link coordinate [m]
+    orientation_in_link : quentention [w x y z]
+    ======================================================================== -->
+    <robot_flange>
+        <parent_link_name>link7</parent_link_name>
+        <position_in_link>0.0 0.0 0.074</position_in_link>
+        <orientation_in_link>0.0 0.0 0.0 1.0 </orientation_in_link>
+    </robot_flange>
+    <!-- ============ EtherCAT Setting =========================================
+    ecat_ctrl_app         : the file path of the ethercat control app
+    ethercat_config       : configuration file of ethercat master program
+    firmware_version      : firmware verion on each joint
+    ecat_ctrl_app_version : the version of arm control app
+    ======================================================================== -->
+    <ethercat>
+        <ecat_ctrl_app>../../../../flexiv_robots/app/ArmDriverApp</ecat_ctrl_app>
+        <ethercat_config>../../../../flexiv_robots/specs/A01F-003/robot_config.xml</ethercat_config>
+        <firmware_version>v1.l.5</firmware_version>
+        <ecat_ctrl_app_version>v3.m.5</ecat_ctrl_app_version>
+    </ethercat>
+    <!-- ============ Force Sensor ============================================
+    comm_type : communication type [ETHERNET or ETHERCAT]
+    comm_ip   : IP address for ethernet. It will not be used in etherCAT mode
+    link_name : the link that the force sensor is attached
+    position_in_link : the position in link coordinate [m]
+    orientation_in_link : quentention [w x y z]
+    radius : radius of the force sensor [m]
+    height : height of the force sensor [m]
+    center_of_mass : [m]
+    mass : kg
+    inertia: [ Ixx Iyy Izz Ixy Ixz Iyz ]
+    ======================================================================== -->
+    <!--<force_sensor_6DOFs>
+        <comm_type>ETHERCAT</comm_type>
+        <comm_ip>192.168.2.1</comm_ip>
+        <link_name>link7</link_name>
+        <position_in_link>0.0 0.0 0.074</position_in_link>
+        <orientation_in_link>0.7071068 0 0 0.7071068 </orientation_in_link>
+        <radius>0.035</radius>
+        <height>0.035</height>
+        <center_of_mass>0.0 0.0 0.0175</center_of_mass>
+        <mass>0.260</mass>
+        <inertia>1.1e-04 1.1e-04 1.6e-04 0.0 0.0 0.0</inertia>
+    </force_sensor_6DOFs>-->
+    <!-- ============ Motion Bar ============================================
+    type : FlexivMotionBar, LogitechF710, None
+    path : path of connected device, (e.g. /dev/input/js0, /dev/ttyUSB0, COM1)
+    =========================================================================-->
+    <motion_bar>
+        <type>None</type>
+        <path/>
+    </motion_bar>
+    <!-- ============ Tool ====================================================
+    link_name : the link that the tool is attached.
+                Ex: regular link : link 1~7,
+                    special link : ground, flange, tcp, camera, world
+    position_in_link    : the position in link coordinate [m]
+    orientation_in_link : quentention [w x y z]
+    tool_config_file    : the tool configuration file
+    ======================================================================== -->
+    <!--<tool>
+        <tool_config_file>toolGripperLego.xml</tool_config_file>
+        <link_name>flange</link_name>
+        <position_in_link>0.0 0.0 0.0</position_in_link>
+        <orientation_in_link>1.0 0.0 0.0  0.0 </orientation_in_link>
+    </tool>-->
+    <!-- ============ Calibration ========================================== -->
+    <calibration_joint_torque_sensors> calibration/jointTorqueSensorOffset.cali</calibration_joint_torque_sensors>
+    <calibration_kinematics> calibration/kinematics.cali</calibration_kinematics>
+    <calibration_joint_position_link_encoder>calibration/jointPositionLinkEncoder.cali</calibration_joint_position_link_encoder>
+    <!--<calibration_dynamics> calibration/dynamics.cali</calibration_dynamics>-->
+    <!-- ============ Semantic planner ===================================== -->
+    <semanticplanner_rules>rules/RULES</semanticplanner_rules>
+    <!-- ============ Camera Info =============================================
+    parent_link_name : the link that camera is attached
+    position_in_link : camera (origin) position in link coordinate
+    orientation_in_link :  [ w; x; y; z] quaternion in link frame
+    camera_size : [length(x-axis); width(y-axis); height(z-axis)] in meters
+    calibration : would overwrite m_poseInParent if not commented.
+    =========================================================================-->
+    <robot_camera>
+        <camera_type>CAMERA_RGBD</camera_type>
+        <parent_link_name>link7</parent_link_name>
+        <position_in_link>0.07717 0.0325 0.0365</position_in_link>
+        <orientation_in_link>0.7071068 0.0 0.0 0.7071068</orientation_in_link>
+        <camera_size> 0.088  0.015 0.015 </camera_size>
+        <rgb_camera_pos>-0.0325 0.0 0.0 </rgb_camera_pos>
+        <!--<calibration> calibration/inHandCamera.cali </calibration>-->
+    </robot_camera>
+    <robot_camera>
+        <camera_type>CAMERA_RGBD</camera_type>
+        <parent_link_name>world</parent_link_name>
+        <position_in_link>-0.0 0.5 0.0</position_in_link>
+        <orientation_in_link>1.0 0.0 0.0 0.0</orientation_in_link>
+        <camera_size> 0.088  0.015 0.015 </camera_size>
+        <rgb_camera_pos>-0.0325 0.0 0.0 </rgb_camera_pos>
+    </robot_camera>
+    <!-- ======== Simulator Setting ======================================== -->
+    <simulator>
+        <camera>
+            <pos>1.8   0.0   0.35</pos>
+            <target>0.0   0.0   0.35</target>
+            <up>0   0   1</up>
+            <clip>0 10</clip>
+        </camera>
+        <light>
+            <pos>50.0   0.0   0.0</pos>
+            <target>0.0   0.0   0.1</target>
+        </light>
+        <light>
+            <pos>10.0   5.0   1.0</pos>
+            <target>0.0   0.0   0.5</target>
+        </light>
+        <light>
+            <pos>-10.0  -10.0 1.0</pos>
+            <target>0.0   0.0   0.0</target>
+        </light>
+        <!--<object_file>tag0.xml</object_file>-->
+    </simulator>
+</fvr>

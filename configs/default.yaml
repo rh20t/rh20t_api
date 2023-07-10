@@ -1,0 +1,28 @@
+# general visualization settings
+robot_configs: 'configs/configs.json'
+screenshot_path: './res'
+
+time_interval: 100
+max_traj_size: 15
+viewport_width: 1280
+viewport_height: 720
+chosen_cam_idx: -1
+
+enable_ft: true
+enable_pcd: false
+enable_model: true
+enable_traj: true
+
+# point cloud generation and display
+downsample_voxel_size_m: 0.005
+filter_num_neighbor: 10
+filter_radius_m: 0.01
+filter_std_ratio: 2.0
+normal_radius: 0.01
+normal_num_neighbor: 30
+min_depth_m: 0.4
+max_depth_m: 1.0
+resolution: !!python/tuple
+- 1280
+- 720
+debug: false

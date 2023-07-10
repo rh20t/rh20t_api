@@ -1,0 +1,250 @@
+<?xml version="1.0" ?>
+<!-- ======================================================================= -->
+<!-- |                           Flexiv 7DOFs Arm                          | -->
+<!-- ======================================================================= -->
+<robot name="flexivArm_pvt3">
+  <!-- ============================ Link Configuration ===================== -->
+  <link name="world"/>
+  <!-- ============ base link =========== -->
+  <link name="base">
+    <inertial>
+      <mass value="3.165192"/> 
+      <origin rpy="0 0 0" xyz="-0.001426 0.001499 0.073871"/>
+      <inertia ixx="0.013283" iyy="0.013341" izz="0.006907" ixy="0.000033" ixz="0.000242" iyz="-0.000264"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="graphics/link0_body.stl"/>
+      </geometry>      
+    </visual>  
+    <collision>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <geometry>
+         <mesh filename="graphics/link0_body.stl"/>
+       </geometry>
+    </collision>   
+  </link>
+  <!-- ============ link 1 ============= -->
+  <link name="link1">
+    <inertial>
+      <mass value="3.463530"/> 
+      <origin rpy="0 0 0" xyz="0.000139 0.006661 0.148657"/>
+      <inertia ixx="0.025579" iyy="0.025107" izz="0.007014" ixy="-0.000029" ixz="0.000021"  iyz="0.001781" />
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="graphics/link1_assemble.stl"/>
+      </geometry>      
+    </visual>    
+    <collision>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <geometry>
+         <mesh filename="graphics/link1_assemble.stl"/>
+       </geometry>
+    </collision>  
+  </link>
+  <!-- ============ link 2 ============= -->
+  <link name="link2">
+    <inertial>
+      <mass value="2.461088"/> 
+      <origin rpy="0 0 0" xyz="0.000124 0.035809 0.100437"/>
+      <inertia ixx="0.021017" iyy="0.021754" izz="0.003223" ixy="-0.000004" ixz="0.000003"  iyz="-0.000107" />
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="graphics/link2_assemble.stl"/>
+      </geometry>      
+    </visual>  
+    <collision>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <geometry>
+         <mesh filename="graphics/link2_assemble.stl"/>
+       </geometry>
+    </collision>   
+  </link>
+  <!-- ============ link 3 ============= -->
+  <link name="link3">
+    <inertial>
+      <mass value="2.114110"/> 
+      <origin rpy="0 0 0" xyz="-0.011086 -0.005253 0.131548"/>   
+      <inertia ixx="0.012226" iyy="0.012012" izz="0.003112" ixy="0.000137" ixz="-0.001256"  iyz="-0.000899" />
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="graphics/link3_assemble.stl"/>
+      </geometry>      
+    </visual>  
+    <collision>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <geometry>
+         <mesh filename="graphics/link3_assemble.stl"/>
+       </geometry>
+    </collision>      
+  </link>
+  <!-- ============ link 4 ============= -->
+  <link name="link4">
+    <inertial>
+      <mass value="2.114110"/> 
+      <origin rpy="0 0 0" xyz="0.013775 -0.028770 0.107932"/>
+      <inertia ixx="0.015236" iyy="0.015646" izz="0.002410" ixy="0.000052" ixz="0.001263"  iyz="0.000604" />
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="graphics/link4_assemble.stl"/>
+      </geometry>      
+    </visual>   
+    <collision>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <geometry>
+         <mesh filename="graphics/link4_assemble.stl"/>
+       </geometry>
+    </collision>  
+  </link>
+  <!-- ============ link 5 ============= -->
+  <link name="link5">
+    <inertial>
+      <mass value="2.007245"/> 
+      <origin rpy="0 0 0" xyz="0.000135 0.005594 0.132106"/>
+      <inertia ixx="0.012881" iyy="0.012487" izz="0.003005" ixy="-0.000019" ixz="0.000025"  iyz="0.000903" />
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="graphics/link5_assemble.stl"/>
+      </geometry>      
+    </visual>    
+    <collision>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <geometry>
+         <mesh filename="graphics/link5_assemble.stl"/>
+       </geometry>
+    </collision>
+  </link>
+  <!-- ============ link 6 ============= -->
+  <link name="link6">
+    <inertial>
+      <mass value="1.953128"/> 
+      <origin rpy="0 0 0" xyz="-0.009555 0.056435 0.071550"/>
+      <inertia ixx="0.007438" iyy="0.007679" izz="0.003232" ixy="-0.000278" ixz="-0.000730"  iyz="0.001580" />
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="graphics/link6_assemble.stl"/>
+      </geometry>      
+    </visual>
+    <collision>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <geometry>
+         <mesh filename="graphics/link6_assemble.stl"/>
+       </geometry>
+    </collision>    
+  </link>
+
+  <!-- ============ link 7 ============= -->
+  <link name="link7">
+    <inertial>
+      <mass value="0.789282"/> 
+      <origin rpy="0 0 0" xyz="-0.028033 -0.000597 -0.000008"/>
+      <inertia ixx="0.000980" iyy="0.001060" izz="0.001033" ixy="0.000006" ixz="0.000001"  iyz="-0.000002" />
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="graphics/link7_assemble.stl"/>
+      </geometry>      
+    </visual> 
+    <collision>
+       <origin xyz="0 0 0" rpy="0 0 0"/>
+       <geometry>
+         <mesh filename="graphics/link7_assemble.stl"/>
+       </geometry>
+    </collision>    
+  </link>
+  
+  <!-- ========================= Joint Configuration ======================= -->
+  <!-- ============ joint 0 =============== -->
+  <joint name="joint0" type="fixed">
+    <origin rpy="0 0 -3.1415927" xyz="0 0 0.0"/>
+    <parent link="world"/>
+    <child link="base"/>
+  </joint>
+  
+  <!-- ============ joint 1 =============== -->
+  <joint name="joint1" type="revolute">
+    <origin rpy="0 0 0" xyz="0.0 0.0 0.135"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="123" lower="-2.87979" upper="2.87979" velocity="2.61799"/>
+    <dynamics damping="0.1"/>
+    <parent link="base"/>
+    <child link="link1"/>
+  </joint>
+ 
+  <!-- ============ joint 2 =============== -->
+  <joint name="joint2" type="revolute">
+    <origin rpy="0 0 0" xyz="0.0 0.03 0.210"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="123" lower="-2.16421" upper="2.16421" velocity="2.61799"/>
+    <dynamics damping="0.1"/>
+    <parent link="link1"/>
+    <child link="link2"/>
+  </joint>
+
+  <!-- ============ joint 3 =============== -->
+  <joint name="joint3" type="revolute">
+    <origin rpy="0 0 0" xyz="0.0 0.035  0.205"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="64" lower="-3.05433" upper="3.05433" velocity="2.61799"/>
+    <dynamics damping="0.1"/>
+    <parent link="link2"/>
+    <child link="link3"/>
+  </joint>
+
+  <!-- ============ joint 4 =============== -->
+  <joint name="joint4" type="revolute">
+    <origin rpy="0 0 0" xyz="-0.02 -0.03 0.19"/>
+    <axis xyz="0 -1 0"/>
+    <limit effort="64" lower="-2.79253" upper="1.95477" velocity="2.61799"/>
+    <dynamics damping="0.1"/>
+    <parent link="link3"/>
+    <child link="link4"/>
+  </joint>
+
+  <!-- ============ joint 5 =============== -->
+  <joint name="joint5" type="revolute">
+    <origin rpy="0 0 0" xyz="0.02 -0.025 0.195"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="39" lower="-3.05433" upper="3.05433" velocity="5.23599"/>
+    <dynamics damping="0.1"/>
+    <parent link="link4"/>
+    <child link="link5"/>
+  </joint>
+
+  <!-- ============ joint 6 =============== -->
+  <joint name="joint6" type="revolute">
+    <origin rpy="0 0 0" xyz="0.0 0.03 0.19"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="39" lower="-1.48353" upper="4.62512" velocity="5.23599"/>
+    <dynamics damping="0.1"/>
+    <parent link="link5"/>
+    <child link="link6"/>
+  </joint>
+
+  <!-- ============ joint 7 =============== -->
+  <joint name="joint7" type="revolute">
+    <origin rpy="0 -1.5707963 0" xyz="-0.055 0.070 0.11"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="39" lower="-3.05433" upper="3.05433" velocity="5.23599"/>
+    <dynamics damping="0.1"/>
+    <parent link="link6"/>
+    <child link="link7"/>
+  </joint> 
+</robot>
+
+
+
