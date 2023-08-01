@@ -14,7 +14,11 @@ The information for each robot configuration are in `configs/configs.json` file,
 
 ### Basic Usage
 
-Here presents basic usage of the dataset API, including a scene data loader for loading preprocessed scene data from the dataset, as well as an online preprocessor for real robotic manipulation inference. You can also refer to our visualizer implementation for better understanding how to use the scene data loader.
+Here presents basic usage of the dataset API, including a data extraction script, a scene data loader for loading preprocessed scene data from the dataset, as well as an online preprocessor for real robotic manipulation inference. You can also refer to our visualizer implementation for better understanding how to use the scene data loader.
+
+#### Data Extraction Script
+
+The RGB-D data is stored in mp4 format, we need to change the data into the original image format. In `rh20t_api/extract.py` we provide a script to convert a color video and a depth video into the original image format.
 
 #### Scene Data Loader
 
