@@ -18,7 +18,7 @@ Here presents basic usage of the dataset API, including a data extraction script
 
 #### Data Extraction Script
 
-The RGB-D data is stored in mp4 format, we need to change the data into the original image format. In `rh20t_api/extract.py` we provide a script to convert a color video and a depth video into the original image format.
+The RGB-D data is stored in mp4 format, we need to change the data into the original image format. In `rh20t_api/extract.py` we provide APIs and a multiprocessing script to convert the dataset into the original image version. Notice that the following scene data loader is based on the original image version of RH20T.
 
 #### Scene Data Loader
 
