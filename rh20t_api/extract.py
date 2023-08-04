@@ -41,6 +41,7 @@ def convert_depth(depth_file, depth_timestamps, dest_depth_dir, size = (1280, 72
     width, height = size
     cap = cv2.VideoCapture(depth_file)
     cnt = 0
+    is_l515 = ("cam_f" in depth_file)
     while True:
         ret, frame = cap.read()
         if ret:
@@ -48,6 +49,8 @@ def convert_depth(depth_file, depth_timestamps, dest_depth_dir, size = (1280, 72
             gray1 = np.array(gray[:height, :]).astype(np.int32)
             gray2 = np.array(gray[height:, :]).astype(np.int32)
             gray = np.array(gray2 * 256 + gray1).astype(np.uint16)
+            if is_l515:
+                gray = gray * 4
             cv2.imwrite(os.path.join(dest_depth_dir, '{}.png'.format(depth_timestamps[cnt])), gray)
             cnt += 1
         else:
