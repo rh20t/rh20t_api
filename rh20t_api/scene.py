@@ -506,6 +506,7 @@ class RH20TScene:
             self._raw_value[value_field][_idx_2]
         )
 
+    # Depreciated, internal use only. Please use get_joint_angles_aligned()
     def get_joints_angles(self, timestamp:int): return self.get_raw_value(timestamp, "joint")[self._conf.robot_joint_field[0]:self._conf.robot_joint_field[1]]
         
     def get_ft_aligned(self, timestamp:int, serial:str="base", zeroed:bool=True) -> np.ndarray:
