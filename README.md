@@ -110,7 +110,7 @@ Before visualizing a scene, we should first preprocess the images to point cloud
 ```bash
 python visualize.py --scene_folder [SCENE_FOLDER] --cache_folder [CACHE_FOLDER] --preprocess
 ```
-# NOTE: The RGB and depth images were originally 1280x720 and are now resized to 640x360. To get the visualization run normally, we either need to resize the images back to 1280x720 or modify the camera intrinsics. In this implementation, we explicitly scale the intrinsics by 0.5 at [here](). If you are projecting the depth to point cloud in your own project, don't forget this step!
+# NOTE: The RGB and depth images were originally 1280x720 and are now resized to 640x360. To get the visualization run normally, we either need to resize the images back to 1280x720 or modify the camera intrinsics. In this implementation, we explicitly scale the intrinsics by 0.5 at [here](https://github.com/rh20t/rh20t_api/blob/main/utils/point_cloud.py#L93-L94). If you are projecting the depth to point cloud in your own project, don't forget this step!
 
 You can modify configurations including sampling time interval, screenshot saving path, and choices to enable visualizing etc in `configs/default.yaml`. If you would only like to view the first several frames of point clouds, you can run the above command for a while and then stop it with `Ctrl + C`. It is recommended to cache at least the first frame point cloud since it is used for adjusting the initial viewing direction.
 
