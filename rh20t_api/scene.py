@@ -1,7 +1,7 @@
 import os
 import json
 import numpy as np
-from typing import List, Dict
+from typing import List, Dict, Tuple
 from .transforms import pose_array_quat_2_matrix
 from .convert import *
 from .configurations import get_conf_from_dir_name, Configuration, tcp_as_q
@@ -63,6 +63,8 @@ class RH20TScene:
         self._tcp_base_aligned = None
         self._base_aligned_timestamps = None
         self._base_aligned_timestamps_in_serial = None
+        self._base_aligned_timestamps_time_serial_pairs:List[Tuple[int, str]] = None
+        self._joint_angles_aligned:Dict[str, Dict[int, np.ndarray]] = None
         
         self._low_freq_timestamps = None
         self._high_freq_timestamps = None
@@ -172,6 +174,15 @@ class RH20TScene:
             _t_v.sort()
             self._base_aligned_timestamps = [_item[0] for _item in _t_v]
             self._base_aligned_timestamps_in_serial = [(_item[1], _item[2]) for _item in _t_v]
+    
+    def _load_joint_angles_aligned(self):
+        self._joint_angles_aligned = load_dict_npy(os.path.join(self.folder, self._used_aligned_folder, "joint.npy"))
+        if self._base_aligned_timestamps is None:
+            _t_v = []
+            for _k in self._joint_angles_aligned: _t_v.extend([(_t, _k) for _t in self._joint_angles_aligned[_k]])
+            _t_v.sort()
+            self._base_aligned_timestamps = [_item[0] for _item in  _t_v]
+            self._base_aligned_timestamps_time_serial_pairs = _t_v
         
     def _load_low_freq_timestamps(self):
         # in low frequency data, the timestamps in all the folders (i.e. color, depth, joint, etc.) match
@@ -180,8 +191,14 @@ class RH20TScene:
         self._low_freq_timestamps:Dict[str, List[int]] = {}
         for cam_directory in cam_directories:
             serial = cam_dir_to_serial(cam_directory)
+            # In the resized version, a `timestamps.npy` is provided
+            if os.path.exists(os.path.join(self.folder, cam_directory, "timestamps.npy")):
+                self._low_freq_timestamps[serial] = sorted(load_dict_npy(os.path.join(self.folder, cam_directory, "timestamps.npy"))["color"])                
+                continue
             try: self._low_freq_timestamps[serial] = sorted([img_name_to_timestamp(image_name) for image_name in os.listdir(os.path.join(self.folder, cam_directory, "color"))])
-            except: self._low_freq_timestamps[serial] = []
+            except Exception as e: 
+                print(f"Exception {e} occurs when loading timestamps in {serial}, {self.folder}")
+                self._low_freq_timestamps[serial] = []
             
     def _load_high_freq_timestamps(self):
         if self._high_freq_aligned is None: self._load_high_freq_aligned()
@@ -362,6 +379,11 @@ class RH20TScene:
     def tcp_base_aligned(self):
         if self._tcp_base_aligned is None: self._load_tcp_base_aligned()
         return self._tcp_base_aligned
+    
+    @property
+    def joint_angles_aligned(self):
+        if self._joint_angles_aligned is None: self._load_joint_angles_aligned()
+        return self._joint_angles_aligned
     
     @property
     def low_freq_timestamps(self):
@@ -551,6 +573,29 @@ class RH20TScene:
             self.tcp_aligned[serial][_idx_1]["tcp"],
             self.tcp_aligned[serial][_idx_2]["tcp"]
         )
+    
+    def get_joint_angles_aligned(self, timestamp:int, serial:str="base"):
+        if self.is_high_freq: raise NotImplementedError(f"High freq joint angles getter not implemented yet.")
+        if serial == "base":
+            joint_angles_aligned = self.joint_angles_aligned
+            _idx_1, _idx_2 = binary_search_closest_two_idx(self._base_aligned_timestamps, timestamp)
+            (time_1, serial_1) = self._base_aligned_timestamps_time_serial_pairs[_idx_1]
+            (time_2, serial_2) = self._base_aligned_timestamps_time_serial_pairs[_idx_2]
+            return interpolate_linear(
+                timestamp,
+                self._base_aligned_timestamps[_idx_1],
+                self._base_aligned_timestamps[_idx_2],
+                joint_angles_aligned[serial_1][time_1],
+                joint_angles_aligned[serial_2][time_2]
+            )[self._conf.robot_joint_field[0]:self._conf.robot_joint_field[1]]
+        _idx_1, _idx_2 = binary_search_closest_two_idx(self.low_freq_timestamps[serial], timestamp)
+        return interpolate_linear(
+            timestamp,
+            self.low_freq_timestamps[serial][_idx_1],
+            self.low_freq_timestamps[serial][_idx_2],
+            self.joint_angles_aligned[serial][self.low_freq_timestamps[serial][_idx_1]],
+            self.joint_angles_aligned[serial][self.low_freq_timestamps[serial][_idx_2]]
+        )[self._conf.robot_joint_field[0]:self._conf.robot_joint_field[1]]
     
     def get_tactile(self, timestamp): raise NotImplementedError
     def detect_outlier(self): raise NotImplementedError

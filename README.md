@@ -49,9 +49,9 @@ Some of the methods/properties in the scene data loader that may be of use are l
 |`RH20TScene.get_audio_path()`|The audio path|
 |`RH20TScene.get_image_path_pairs(timestamp:int, image_types:List[str]=["color", "depth"])`|Query interpolated `Dict[str, List[str]]` type of color-depth image pairs paths for each camera given a timestamp|
 |`RH20TScene.get_image_path_pairs_period(time_interval:int, start_timestamp:int=None, end_timestamp:int=None)`|Query a list of interpolated `Dict[str, List[str]]` type of color-depth image pairs paths for each camera given a period of time in milliseconds (starting and ending timestamps will be set to the scene's if not specified)|
-|`RH20TScene.get_joints_angles(timestamp:int)`|Query interpolated joint angle vectors given a timestamp|
-|`RH20TScene.get_ft_aligned(timestamp:int, serial:str="base", zeroed:bool=True)`|Query interpolated preprocessed force-torque concatenated 6d vector given a timestamp and a camera serial (or "base")|
-|`RH20TScene.get_tcp_aligned(timestamp:int, serial:str="base")`|Query interpolated preprocessed tcp 7d quaternion pose vector given a timestamp and a camera serial (or "base")|
+|`RH20TScene.get_ft_aligned(timestamp:int, serial:str="base", zeroed:bool=True)`|Query interpolated preprocessed force-torque concatenated 6d vector given a timestamp and a camera serial (or "base" which reads data from all serials)|
+|`RH20TScene.get_tcp_aligned(timestamp:int, serial:str="base")`|Query interpolated preprocessed tcp 7d quaternion pose vector given a timestamp and a camera serial (or "base" which reads data from all serials)|
+|`RH20TScene.get_joint_angles_aligned(timestamp:int, serial:str="base")`|Query interpolated joint angles sequence given a timestamp and a camera serial (or "base" which reads data from all serials)|
 
 #### Online Preprocessor
 
@@ -108,6 +108,7 @@ The minimal files requirement for visualizing a scene will be a scene folder pla
 Before visualizing a scene, we should first preprocess the images to point clouds and cache them to save time, for example:
 
 ```bash
+# NOTE: The RGB images were originally 1280x720 and are now resized to 640x360. To get the scripts run normally, we may need to resize the images back to 1280x720 or modify `intrinsics.npy`. We are currently working on this issue.
 python visualize.py --scene_folder [SCENE_FOLDER] --cache_folder [CACHE_FOLDER] --preprocess
 ```
 

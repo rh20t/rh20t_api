@@ -364,7 +364,7 @@ def visualize(scene_path:str, pcd_folder:str, vis_cfg:dict, logger:Logger):
 
                 if enable_model:
                     # visualize robot arm model
-                    robot_model.update(dataloader.get_joints_angles(_t), first_time)
+                    robot_model.update(dataloader.get_joint_angles_aligned(_t), first_time)
                     for m in robot_model.geometries_to_add: visualizer.add_geometry(m, reset_bounding_box=False)
                     for m in robot_model.geometries_to_update: visualizer.update_geometry(m)                    
                     renderer_update(visualizer)
