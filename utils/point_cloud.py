@@ -21,8 +21,8 @@ class PointCloud:
         normal_num_neighbor:int=30, 
         min_depth_m:float=0.3, 
         max_depth_m:float=0.8, 
-        width:int=1280, 
-        height:int=720,
+        width:int=640, 
+        height:int=360,
         pcd_file_format:str=".ply",
         debug:bool=True
     ):
@@ -90,8 +90,8 @@ class PointCloud:
 
         intrinsic_o3d = o3d.camera.PinholeCameraIntrinsic()
         intrinsic_o3d.set_intrinsics(int(width / downsample_factor), int(height / downsample_factor), 
-            intrinsic[0, 0] / downsample_factor, intrinsic[1, 1] / downsample_factor, 
-            intrinsic[0, 2] / downsample_factor, intrinsic[1, 2] / downsample_factor)
+            0.5 * intrinsic[0, 0] / downsample_factor, 0.5 * intrinsic[1, 1] / downsample_factor, 
+            0.5 * intrinsic[0, 2] / downsample_factor, 0.5 * intrinsic[1, 2] / downsample_factor)
         pcd = o3d.geometry.PointCloud.create_from_rgbd_image(rgbd_image, intrinsic_o3d, extrinsic=extrinsic)
         return pcd
 
