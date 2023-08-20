@@ -23,6 +23,6 @@ normal_num_neighbor: 30
 min_depth_m: 0.4
 max_depth_m: 1.0
 resolution: !!python/tuple
-- 1280
-- 720
+- 640
+- 360
 debug: false
