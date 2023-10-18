@@ -52,6 +52,8 @@ Some of the methods/properties in the scene data loader that may be of use are l
 |`RH20TScene.get_ft_aligned(timestamp:int, serial:str="base", zeroed:bool=True)`|Query interpolated preprocessed force-torque concatenated 6d vector given a timestamp and a camera serial (or "base" which reads data from all serials)|
 |`RH20TScene.get_tcp_aligned(timestamp:int, serial:str="base")`|Query interpolated preprocessed tcp 7d quaternion pose vector given a timestamp and a camera serial (or "base" which reads data from all serials)|
 |`RH20TScene.get_joint_angles_aligned(timestamp:int, serial:str="base")`|Query interpolated joint angles sequence given a timestamp and a camera serial (or "base" which reads data from all serials)|
+|`RH20TScene.get_gripper_command(timestamp:int)`|Query interpolated gripper command given a timestamp|
+|`RH20TScene.get_gripper_info(timestamp:int)`|Query interpolated gripper info given a timestamp|
 
 #### Online Preprocessor
 

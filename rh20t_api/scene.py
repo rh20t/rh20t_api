@@ -65,6 +65,7 @@ class RH20TScene:
         self._base_aligned_timestamps_in_serial = None
         self._base_aligned_timestamps_time_serial_pairs:List[Tuple[int, str]] = None
         self._joint_angles_aligned:Dict[str, Dict[int, np.ndarray]] = None
+        self._gripper = None
         
         self._low_freq_timestamps = None
         self._high_freq_timestamps = None
@@ -180,6 +181,15 @@ class RH20TScene:
         if self._base_aligned_timestamps is None:
             _t_v = []
             for _k in self._joint_angles_aligned: _t_v.extend([(_t, _k) for _t in self._joint_angles_aligned[_k]])
+            _t_v.sort()
+            self._base_aligned_timestamps = [_item[0] for _item in  _t_v]
+            self._base_aligned_timestamps_time_serial_pairs = _t_v
+    
+    def _load_gripper(self):
+        self._gripper = load_dict_npy(os.path.join(self.folder, self._used_aligned_folder, "gripper.npy"))
+        if self._base_aligned_timestamps is None:
+            _t_v = []
+            for _k in self._gripper: _t_v.extend([(_t, _k) for _t in self._gripper[_k]])
             _t_v.sort()
             self._base_aligned_timestamps = [_item[0] for _item in  _t_v]
             self._base_aligned_timestamps_time_serial_pairs = _t_v
@@ -384,6 +394,12 @@ class RH20TScene:
     def joint_angles_aligned(self):
         if self._joint_angles_aligned is None: self._load_joint_angles_aligned()
         return self._joint_angles_aligned
+
+    @property
+    def gripper(self):
+        if self._gripper is None: self._load_gripper()
+        return self._gripper
+    
     
     @property
     def low_freq_timestamps(self):
@@ -597,6 +613,27 @@ class RH20TScene:
             self.joint_angles_aligned[serial][self.low_freq_timestamps[serial][_idx_1]],
             self.joint_angles_aligned[serial][self.low_freq_timestamps[serial][_idx_2]]
         )[self._conf.robot_joint_field[0]:self._conf.robot_joint_field[1]]
+    
+    def get_gripper(self, timestamp:int, command_or_info="command"):
+        if self.is_high_freq: raise NotImplementedError(f"High freq gripper getter not implemented yet.")
+        gripper = self.gripper
+        _idx_1, _idx_2 = binary_search_closest_two_idx(self._base_aligned_timestamps, timestamp)
+        (time_1, serial_1) = self._base_aligned_timestamps_time_serial_pairs[_idx_1]
+        (time_2, serial_2) = self._base_aligned_timestamps_time_serial_pairs[_idx_2]
+        return interpolate_linear(
+                timestamp,
+                self._base_aligned_timestamps[_idx_1],
+                self._base_aligned_timestamps[_idx_2],
+                gripper[serial_1][time_1][f"gripper_{command_or_info}"][0],
+                gripper[serial_2][time_2][f"gripper_{command_or_info}"][0],
+            )
+
+    def get_gripper_command(self, timestamp:int):
+        return self.get_gripper(timestamp, "command")
+    
+    def get_gripper_info(self, timestamp:int):
+        return self.get_gripper(timestamp, "info")
+
     
     def get_tactile(self, timestamp): raise NotImplementedError
     def detect_outlier(self): raise NotImplementedError
